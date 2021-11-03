@@ -5,6 +5,7 @@ import { CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import About from "./Pages/About/About/About";
+import Appointment from "./Pages/Appointment/Appointment/Appointment";
 import Blog from "./Pages/Blog/Blog/Blog";
 import Contact from "./Pages/Contact/Contact/Contact";
 import DentalService from "./Pages/DentalService/DentalService/DentalService";
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route exact path="/about">
               <About></About>
+            </Route>
+            <Route exact path="/appointment">
+              <Appointment></Appointment>
             </Route>
             <Route exact path="/dentalServices">
               <DentalService></DentalService>
