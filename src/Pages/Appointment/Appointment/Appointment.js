@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import AppointmentHeader from "../AppointmentHeader/AppointmentHeader";
 import AvailableAppointments from "../AvailableAppointments/AvailableAppointments";
 
 const Appointment = () => {
-  const [date, setDate] = React.useState(new Date());
+  const [date, setDate] = useState(new Date());
 
   return (
     <div>
