@@ -1,0 +1,12 @@
+/* contact-section */
+.contact-section {
+  background: url(../../../images//contact-bg.jpg) no-repeat center center;
+  background-size: cover;
+  background-color: rgba(58, 66, 86, 0.9);
+  background-blend-mode: darken, luminosity;
+}
+.contact-form input,
+textarea {
+  border: 1px solid #fff;
+  background-color: #fff;
+}
