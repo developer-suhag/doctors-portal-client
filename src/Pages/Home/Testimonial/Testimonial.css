@@ -1,0 +1,6 @@
+/* testimonials */
+.testimonials {
+  background: url(../../../images/quote.svg) no-repeat;
+  background-position: right top;
+  background-size: contain;
+}
