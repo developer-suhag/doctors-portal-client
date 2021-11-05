@@ -33,13 +33,15 @@ const useFirebase = () => {
       })
       .finally(() => setIsLoading(false));
   };
-  const handleLogIn = (email, password) => {
+  const handleLogIn = (email, password, location, history) => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         setUser(result.user);
         setAuthError("");
         setAuthSuccess("Login successfully!");
+        const destination = location?.state?.from || "/";
+        history.replace(destination);
       })
       .catch((error) => {
         setAuthSuccess("");

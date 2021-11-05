@@ -14,6 +14,7 @@ import Home from "./Pages/Home/Home/Home";
 import Login from "./Pages/Login/Login/Login";
 import Register from "./Pages/Login/Register/Register";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
+import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
 import Reviews from "./Pages/Reviews/Reviews/Reviews";
 import Footer from "./Pages/Shared/Footer/Footer";
 import Navigation from "./Pages/Shared/Navigation/Navigation";
@@ -35,9 +36,9 @@ function App() {
               <Route exact path="/about">
                 <About></About>
               </Route>
-              <Route exact path="/appointment">
+              <PrivateRoute exact path="/appointment">
                 <Appointment></Appointment>
-              </Route>
+              </PrivateRoute>
               <Route exact path="/dentalServices">
                 <DentalService></DentalService>
               </Route>
