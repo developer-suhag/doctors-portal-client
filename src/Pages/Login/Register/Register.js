@@ -9,14 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import login from "../../../images/login.png";
 
 const Register = () => {
   const [loginData, setLoginData] = useState({});
-  const { user, authError, handleRegister, authSuccess, isLoading } = useAuth();
-  const handleOnChange = (e) => {
+  const { authError, handleRegister, authSuccess, isLoading } = useAuth();
+  const history = useHistory();
+  const handleOnBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
     const newValue = { ...loginData };
@@ -24,12 +25,12 @@ const Register = () => {
     setLoginData(newValue);
   };
   const handleEmailRegister = (e) => {
-    const { email, password, password2 } = loginData;
+    const { name, email, password, password2 } = loginData;
     if (password !== password2) {
       alert("Password Not matched");
       return;
     }
-    handleRegister(email, password);
+    handleRegister(email, password, name, history);
     e.preventDefault();
     e.target.reset();
   };
@@ -44,13 +45,23 @@ const Register = () => {
             <form onSubmit={handleEmailRegister}>
               <TextField
                 required
+                type="text"
+                name="name"
+                sx={{ mb: 2 }}
+                variant="standard"
+                fullWidth
+                label="Your Name"
+                onBlur={handleOnBlur}
+              ></TextField>
+              <TextField
+                required
                 type="email"
                 name="email"
                 sx={{ mb: 2 }}
                 variant="standard"
                 fullWidth
                 label="Your Email"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
               ></TextField>
               <TextField
                 required
@@ -60,7 +71,7 @@ const Register = () => {
                 variant="standard"
                 fullWidth
                 label="Your Password"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
               ></TextField>
               <TextField
                 required
@@ -70,7 +81,7 @@ const Register = () => {
                 variant="standard"
                 fullWidth
                 label="Re Enter Password"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
               ></TextField>
               <Button
                 type="submit"

@@ -21,7 +21,7 @@ const Login = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const handleOnChange = (e) => {
+  const handleonBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
     const newValue = { ...loginData };
@@ -55,7 +55,7 @@ const Login = () => {
                 variant="standard"
                 fullWidth
                 label="Your Email"
-                onChange={handleOnChange}
+                onBlur={handleonBlur}
               ></TextField>
               <TextField
                 required
@@ -64,7 +64,7 @@ const Login = () => {
                 variant="standard"
                 fullWidth
                 label="Your Password"
-                onChange={handleOnChange}
+                onBlur={handleonBlur}
               ></TextField>
               <Button
                 type="submit"
