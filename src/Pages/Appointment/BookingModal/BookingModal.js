@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -23,8 +23,32 @@ const BookingModal = ({ bookingOpen, handleBookingClose, booking, date }) => {
   const { name, time } = booking;
   const { user } = useAuth();
 
+  const initialInfo = {
+    patientName: user?.displayName,
+    email: user?.email,
+    phone: "",
+  };
+
+  const [bookingInfo, setBookingInfo] = useState(initialInfo);
+
+  const handleBookingInfo = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newInfo = { ...bookingInfo };
+    newInfo[field] = value;
+    setBookingInfo(newInfo);
+  };
+
   const handleBookingSubmit = (e) => {
-    alert("submitting");
+    // collect data
+    const appointment = {
+      ...bookingInfo,
+      serviceName: name,
+      time,
+      date: date.toLocaleDateString(),
+    };
+    console.log(appointment);
+    // send to server
 
     handleBookingClose();
 
@@ -60,22 +84,29 @@ const BookingModal = ({ bookingOpen, handleBookingClose, booking, date }) => {
               sx={{ my: 2, width: "100%" }}
               id="filled-size-small"
               type="text"
+              name="patientName"
               defaultValue={user?.displayName}
+              onBlur={handleBookingInfo}
               size="small"
             />
             <TextField
               sx={{ my: 2, width: "100%" }}
               type="email"
               id="filled-size-small"
+              name="email"
               defaultValue={user?.email}
+              onBlur={handleBookingInfo}
               size="small"
             />
             <TextField
+              required
               sx={{ my: 2, width: "100%" }}
               id="filled-size-small"
               type="number"
               defaultValue=""
+              name="phone"
               placeholder="Phone Number"
+              onBlur={handleBookingInfo}
               size="small"
             />
             <TextField
