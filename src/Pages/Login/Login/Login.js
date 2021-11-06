@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
@@ -14,7 +15,8 @@ import login from "../../../images/login.png";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
-  const { authError, handleLogIn, authSuccess, isLoading } = useAuth();
+  const { authError, handleLogIn, signInWithGoogle, authSuccess, isLoading } =
+    useAuth();
 
   const location = useLocation();
   const history = useHistory();
@@ -31,6 +33,11 @@ const Login = () => {
     handleLogIn(email, password, location, history);
     e.preventDefault();
   };
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle(location, history);
+  };
+
   return (
     <>
       <Container sx={{ py: 2 }}>
@@ -75,6 +82,11 @@ const Login = () => {
             <Link style={{ color: "#222" }} to="/register">
               New to Doctors Portal? Register
             </Link>
+            <Box sx={{ my: 3, textAlign: "center" }}>
+              <Button onClick={handleGoogleLogin} variant="outlined">
+                Google Sign In
+              </Button>
+            </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             <img style={{ width: "100%" }} src={login} alt="" />
