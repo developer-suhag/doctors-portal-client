@@ -133,7 +133,7 @@ const BookingModal = ({
             />
             <Box sx={{ textAlign: "right" }}>
               <Button type="submit" variant="contained">
-                Send
+                Book
               </Button>
             </Box>
           </form>

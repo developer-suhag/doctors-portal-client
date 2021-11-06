@@ -9,6 +9,7 @@ import About from "./Pages/About/About/About";
 import Appointment from "./Pages/Appointment/Appointment/Appointment";
 import Blog from "./Pages/Blog/Blog/Blog";
 import Contact from "./Pages/Contact/Contact/Contact";
+import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
 import DentalService from "./Pages/DentalService/DentalService/DentalService";
 import Home from "./Pages/Home/Home/Home";
 import Login from "./Pages/Login/Login/Login";
@@ -17,7 +18,6 @@ import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
 import Reviews from "./Pages/Reviews/Reviews/Reviews";
 import Footer from "./Pages/Shared/Footer/Footer";
-import Navigation from "./Pages/Shared/Navigation/Navigation";
 
 function App() {
   return (
@@ -25,7 +25,6 @@ function App() {
       <CssBaseline>
         <AuthProvider>
           <Router>
-            <Navigation></Navigation>
             <Switch>
               <Route exact path="/">
                 <Home></Home>
@@ -38,6 +37,9 @@ function App() {
               </Route>
               <PrivateRoute exact path="/appointment">
                 <Appointment></Appointment>
+              </PrivateRoute>
+              <PrivateRoute exact path="/dashboard">
+                <Dashboard></Dashboard>
               </PrivateRoute>
               <Route exact path="/dentalServices">
                 <DentalService></DentalService>
