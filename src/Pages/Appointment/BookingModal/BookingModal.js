@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { Button, TextField } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { Button, TextField } from "@mui/material";
+import axios from "axios";
+import React, { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 
 const style = {
@@ -19,7 +20,13 @@ const style = {
   p: 4,
 };
 
-const BookingModal = ({ bookingOpen, handleBookingClose, booking, date }) => {
+const BookingModal = ({
+  bookingOpen,
+  handleBookingClose,
+  booking,
+  date,
+  setBookingSuccess,
+}) => {
   const { name, time } = booking;
   const { user } = useAuth();
 
@@ -47,10 +54,17 @@ const BookingModal = ({ bookingOpen, handleBookingClose, booking, date }) => {
       time,
       date: date.toLocaleDateString(),
     };
-    console.log(appointment);
     // send to server
 
-    handleBookingClose();
+    axios
+      .post("https://still-wave-56250.herokuapp.com/appointments", appointment)
+      .then((result) => {
+        console.log(result);
+        if (result.data?.insertedId) {
+          handleBookingClose();
+          setBookingSuccess(true);
+        }
+      });
 
     e.preventDefault();
   };
