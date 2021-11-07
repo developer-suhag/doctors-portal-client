@@ -1,7 +1,7 @@
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import { Button, Container, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,16 +16,21 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import * as React from "react";
-import { NavLink } from "react-router-dom";
-import Calendar from "../../Shared/Calendar/Calendar";
-import Appointments from "../Appointments/Appointments";
+import { Link, NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import AdminRoute from "../../AdminRoute/AdminRoute";
+import AddDoctor from "../AddDoctor/AddDoctor";
+import DashboardHome from "../DashboardHome/DashboardHome";
+import MakeAdmin from "../MakeAdmin/MakeAdmin";
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
+
+  const { admin } = useAuth();
+  let { path, url } = useRouteMatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -38,6 +43,20 @@ function Dashboard(props) {
       <NavLink style={{ color: "#222" }} to="/appointment">
         <Button color="inherit">Appointment</Button>
       </NavLink>
+      <Link style={{ color: "#222" }} to={`${url}`}>
+        <Button color="inherit">Dashboard</Button>
+      </Link>
+      {admin && (
+        <Box>
+          <Link style={{ color: "#222" }} to={`${url}/makeAdmin`}>
+            <Button color="inherit">Make Admin</Button>
+          </Link>
+          <Link style={{ color: "#222" }} to={`${url}/addDoctor`}>
+            <Button color="inherit">Add Doctor</Button>
+          </Link>
+        </Box>
+      )}
+
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem button key={text}>
@@ -125,18 +144,18 @@ function Dashboard(props) {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          <Container sx={{ py: 6 }}>
-            <Grid container spacing={2}>
-              <Grid xs={12} md={6}>
-                <Calendar date={date} setDate={setDate}></Calendar>
-              </Grid>
-              <Grid xs={12} md={6}>
-                <Appointments date={date}></Appointments>
-              </Grid>
-            </Grid>
-          </Container>
-        </Typography>
+
+        <Switch>
+          <Route exact path={path}>
+            <DashboardHome></DashboardHome>
+          </Route>
+          <AdminRoute path={`${path}/makeAdmin`}>
+            <MakeAdmin></MakeAdmin>
+          </AdminRoute>
+          <AdminRoute path={`${path}/addDoctor`}>
+            <AddDoctor></AddDoctor>
+          </AdminRoute>
+        </Switch>
       </Box>
     </Box>
   );

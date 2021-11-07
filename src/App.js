@@ -38,7 +38,7 @@ function App() {
               <PrivateRoute exact path="/appointment">
                 <Appointment></Appointment>
               </PrivateRoute>
-              <PrivateRoute exact path="/dashboard">
+              <PrivateRoute path="/dashboard">
                 <Dashboard></Dashboard>
               </PrivateRoute>
               <Route exact path="/dentalServices">

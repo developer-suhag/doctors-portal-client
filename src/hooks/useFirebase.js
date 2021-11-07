@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import initializeAuthentication from "../Pages/Login/Firebase/firebase.init";
+import axios from "axios";
 
 initializeAuthentication();
 
@@ -18,6 +19,7 @@ const useFirebase = () => {
   const [authError, setAuthError] = useState("");
   const [authSuccess, setAuthSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [admin, setAdmin] = useState(false);
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
@@ -27,6 +29,8 @@ const useFirebase = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         setUser(result.user);
+        // save user to the database
+        saveUser(email, name);
         setAuthError("");
         setAuthSuccess("Register successfully!");
         updateProfile(auth.currentUser, {
@@ -68,6 +72,8 @@ const useFirebase = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setUser(result.user);
+        // save user to database
+        upsertUser(result?.user?.email, result?.user?.displayName);
         setAuthError("");
         setAuthSuccess("Login successfully!");
         const destination = location?.state?.from || "/";
@@ -103,12 +109,45 @@ const useFirebase = () => {
     });
   }, [auth]);
 
+  const saveUser = (email, displayName) => {
+    const user = { email, displayName };
+    axios
+      .post("https://still-wave-56250.herokuapp.com/users", user)
+      .then((result) => {
+        console.log(result);
+        if (result.data?.insertedId) {
+          alert("hoiche");
+        }
+      });
+  };
+  const upsertUser = (email, displayName) => {
+    const user = { email, displayName };
+    axios
+      .put("https://still-wave-56250.herokuapp.com/users", user)
+      .then((result) => {
+        console.log(result);
+        if (result.data?.upsertedCount > 0) {
+          alert("hoiche");
+        }
+      });
+  };
+
+  // admin check
+  useEffect(() => {
+    axios
+      .get(`https://still-wave-56250.herokuapp.com/users/${user?.email}`)
+      .then((result) => {
+        setAdmin(result.data?.admin);
+      });
+  }, [user.email]);
+
   return {
     handleRegister,
     handleLogIn,
     signInWithGoogle,
     logOut,
     user,
+    admin,
     authError,
     authSuccess,
     isLoading,
