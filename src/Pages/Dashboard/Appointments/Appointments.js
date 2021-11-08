@@ -10,17 +10,23 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 const Appointments = ({ date }) => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [userAppointments, setUserAppointments] = useState([]);
   useEffect(() => {
-    axios
-      .get(
-        `https://still-wave-56250.herokuapp.com/appointments?email=${user?.email}&date=${date}`
-      )
-      .then((result) => {
-        setUserAppointments(result.data);
-      });
-  }, [user?.email, date]);
+    // axios
+    //   .get(
+    //     `https://still-wave-56250.herokuapp.com/appointments?email=${user?.email}&date=${date}`
+    //   )
+    axios({
+      method: "get",
+      url: `https://still-wave-56250.herokuapp.com/appointments?email=${user?.email}&date=${date}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((result) => {
+      setUserAppointments(result.data);
+    });
+  }, [user?.email, date, token]);
   return (
     <div>
       <h2>Appointment</h2>

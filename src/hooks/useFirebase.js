@@ -1,6 +1,8 @@
+import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  getIdToken,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -10,7 +12,6 @@ import {
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import initializeAuthentication from "../Pages/Login/Firebase/firebase.init";
-import axios from "axios";
 
 initializeAuthentication();
 
@@ -20,6 +21,7 @@ const useFirebase = () => {
   const [authSuccess, setAuthSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
+  const [token, setToken] = useState("");
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
@@ -102,6 +104,9 @@ const useFirebase = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        getIdToken(user).then((idToken) => {
+          setToken(idToken);
+        });
       } else {
         setUser({});
       }
@@ -151,6 +156,7 @@ const useFirebase = () => {
     authError,
     authSuccess,
     isLoading,
+    token,
   };
 };
 
