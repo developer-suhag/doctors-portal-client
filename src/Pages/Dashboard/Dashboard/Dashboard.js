@@ -22,6 +22,7 @@ import AdminRoute from "../../AdminRoute/AdminRoute";
 import AddDoctor from "../AddDoctor/AddDoctor";
 import DashboardHome from "../DashboardHome/DashboardHome";
 import MakeAdmin from "../MakeAdmin/MakeAdmin";
+import Payment from "../Payment/Payment";
 
 const drawerWidth = 200;
 
@@ -29,7 +30,7 @@ function Dashboard(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const { admin } = useAuth();
+  const { admin, logOut } = useAuth();
   let { path, url } = useRouteMatch();
 
   const handleDrawerToggle = () => {
@@ -54,6 +55,10 @@ function Dashboard(props) {
           <Link style={{ color: "#222" }} to={`${url}/addDoctor`}>
             <Button color="inherit">Add Doctor</Button>
           </Link>
+
+          <Button onClick={logOut} color="inherit">
+            logOut
+          </Button>
         </Box>
       )}
 
@@ -148,6 +153,9 @@ function Dashboard(props) {
         <Switch>
           <Route exact path={path}>
             <DashboardHome></DashboardHome>
+          </Route>
+          <Route path={`${path}/payment/:id`}>
+            <Payment></Payment>
           </Route>
           <AdminRoute path={`${path}/makeAdmin`}>
             <MakeAdmin></MakeAdmin>

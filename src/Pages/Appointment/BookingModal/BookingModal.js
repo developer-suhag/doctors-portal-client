@@ -27,7 +27,7 @@ const BookingModal = ({
   date,
   setBookingSuccess,
 }) => {
-  const { name, time } = booking;
+  const { name, time, price } = booking;
   const { user } = useAuth();
 
   const initialInfo = {
@@ -52,6 +52,7 @@ const BookingModal = ({
       ...bookingInfo,
       serviceName: name,
       time,
+      price,
       date: date.toLocaleDateString(),
     };
     // send to server
