@@ -9,14 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import login from "../../../images/login.png";
 
 const Register = () => {
   const [loginData, setLoginData] = useState({});
   const { authError, handleRegister, authSuccess, isLoading } = useAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleOnBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -30,7 +30,7 @@ const Register = () => {
       alert("Password Not matched");
       return;
     }
-    handleRegister(email, password, name, history);
+    handleRegister(email, password, name, navigate);
     e.preventDefault();
     e.target.reset();
   };

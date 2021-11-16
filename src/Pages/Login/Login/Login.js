@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import login from "../../../images/login.png";
 
@@ -19,7 +19,7 @@ const Login = () => {
     useAuth();
 
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleonBlur = (e) => {
     const field = e.target.name;
@@ -30,12 +30,12 @@ const Login = () => {
   };
   const handleLogin = (e) => {
     const { email, password } = loginData;
-    handleLogIn(email, password, location, history);
+    handleLogIn(email, password, location, navigate);
     e.preventDefault();
   };
 
   const handleGoogleLogin = () => {
-    signInWithGoogle(location, history);
+    signInWithGoogle(location, navigate);
   };
 
   return (

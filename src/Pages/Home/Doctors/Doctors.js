@@ -7,9 +7,11 @@ import Doctor from "../Doctor/Doctor";
 const Doctors = () => {
   const [doctors, setDoctrs] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/doctors").then((result) => {
-      setDoctrs(result.data);
-    });
+    axios
+      .get("https://still-wave-56250.herokuapp.com/doctors")
+      .then((result) => {
+        setDoctrs(result.data);
+      });
   }, []);
   return (
     <Container sx={{ py: 6 }}>
